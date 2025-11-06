@@ -4,6 +4,7 @@
 
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -39,14 +40,22 @@
   background: linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%);
   transform: scaleX(0);
   transform-origin: bottom left;
-  transition: transform 0.2s ease-out;
+  transition: transform 0.4s ease-out;
 }
 
 .hover-underline:hover::after {
   transform: scaleX(1);
 }
 
+@layer utilities {
+  .text-glow-purple {
+    text-shadow: 0 0 15px rgba(168, 85, 247, 1);
+  }
+}
 
+.patata{
+  color: #24253D;
+}
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

@@ -24,8 +24,8 @@ export default function CryptTextEffect({
   className = "",
   decryptActive = false,
   glitchActive = false,
-  glitchMinDelayMs = 1000,
-  glitchMaxDelayMs = 1500,
+  glitchMinDelayMs = 500,
+  glitchMaxDelayMs = 1000,
   glitchDurationMs = 400,
   glitchTickMs = 100,
 }: CryptTextEffectProps) {

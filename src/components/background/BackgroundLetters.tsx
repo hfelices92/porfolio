@@ -16,8 +16,8 @@ export default function BackgroundLetters() {
     <div className="hidden lg:block lg:absolute lg:top-40 -z-10 pointer-events-none">
       <ScrollVelocity
         texts={[firstHalf, secondHalf]}
-        velocity={100}
-        className="lg:text-9xl font-bold text-gray-100 opacity-10 select-none whitespace-nowrap"
+        velocity={60}
+        className="lg:text-9xl font-bold text-glow-purple text-slate-300 opacity-20 select-none whitespace-nowrap"
       />
     </div>
   );

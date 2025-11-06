@@ -1,20 +1,3 @@
-.scroll-mask {
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 1%,
-    black 90%,
-    transparent
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 1%,
-    black 90%,
-    transparent
-  );
-  overflow-x: hidden;
-}
 
 @keyframes pulse-glow {
   0%, 100% {
@@ -26,16 +9,26 @@
 }
 
 
-@keyframes fadeInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-40px);
+@keyframes fadeIn {
+ from {
+    opacity: 0; 
   }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
+  to {
+    opacity: 1;   
   }
 }
+
+.my-card{
+  view-timeline-name: --card;
+  view-timeline-axis: block ;
+
+  animation-timeline: --card;
+  animation-name: fadeIn;
+
+  animation-range: entry 25% cover 50%;
+  animation-fill-mode: both;
+}
+
 
 @keyframes fadeInUp {
   0% {
@@ -78,10 +71,5 @@
 }
 
 
-
-.project-card {
-  opacity: 0;
-  transform: translate(40px);
-}
 
 
