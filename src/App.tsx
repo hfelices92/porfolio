@@ -7,6 +7,7 @@ import ProjectsSection from "./components/projects/ProjectSection";
 import SkillsCaroussel from "./components/skills/SkillsCarousel";
 
 import MainLayout from "./layouts/MainLayout";
+import Contact from "./components/contact/Contact";
 
 export default function App() {
   // 👇 Añade el tipo HTMLDivElement o HTMLElement
@@ -49,6 +50,9 @@ export default function App() {
 
       <section ref={projectsRef}>
         <ProjectsSection />
+      </section>
+      <section ref={contactRef}>
+        <Contact />
       </section>
     </MainLayout>
   );

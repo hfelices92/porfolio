@@ -13,7 +13,7 @@ export default function BackgroundLetters() {
   const secondHalf = skillNames.slice(half).join(" ");
 
   return (
-    <div className="hidden lg:block lg:absolute lg:top-40 -z-10 pointer-events-none">
+    <div className="hidden lg:block lg:absolute lg:top-62 -z-10 pointer-events-none">
       <ScrollVelocity
         texts={[firstHalf, secondHalf]}
         velocity={60}

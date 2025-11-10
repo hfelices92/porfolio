@@ -70,6 +70,12 @@
   transform: translateY(40px);
 }
 
+.slider-button:hover{
+   animation: squish 300ms ease-in-out 2;
 
-
-
+}
+@keyframes squish {
+  50% {
+    scale: 1.4 0.6;
+  }
+}

@@ -39,7 +39,7 @@ export default function Navbar({ scrollToSection }: NavbarProps) {
         >
           <GradientText
             neon={true}
-            text="About Me"
+            text="Sobre Mi"
             gradient="linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%)"
           />
         </li>
@@ -50,7 +50,7 @@ export default function Navbar({ scrollToSection }: NavbarProps) {
         >
           <GradientText
             neon={true}
-            text="Projects"
+            text="Proyectos"
             gradient="linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%)"
           />
         </li>
@@ -61,7 +61,7 @@ export default function Navbar({ scrollToSection }: NavbarProps) {
         >
           <GradientText
             neon={true}
-            text="Contact"
+            text="Contacto"
             gradient="linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%)"
           />
         </li>

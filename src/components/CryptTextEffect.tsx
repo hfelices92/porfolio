@@ -27,13 +27,13 @@ export default function CryptTextEffect({
   glitchMinDelayMs = 500,
   glitchMaxDelayMs = 1000,
   glitchDurationMs = 400,
-  glitchTickMs = 100,
+  glitchTickMs = 50,
 }: CryptTextEffectProps) {
   const caracteresRandom = useMemo(
     () =>
       randCar && randCar.length
         ? randCar
-        : ["$", "x", "*", "e", "R", "H", "A", "4", "p", "0", "O", "F"],
+        : ["$", "x", "*", "@", "#", "%", "&", "=", "+", "-"],
     [randCar]
   );
 

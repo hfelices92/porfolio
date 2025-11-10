@@ -14,8 +14,8 @@ export default function Space() {
     <MainLayout>
 
       {/* Astronautas flotantes */}
-      <FloatingAstronaut src="/images/notfound/astro1.png" size={180} speed={1.4} />
-      <FloatingAstronaut src="/images/notfound/astro2.png" size={220} speed={1.1} />
+      <FloatingAstronaut src="/images/notfound/astro1.png" size={120} speed={1.4} />
+      <FloatingAstronaut src="/images/notfound/astro2.png" size={280} speed={1.1} />
 
       {/* Contenido principal */}
       <div className="flex flex-col items-center justify-center py-84  text-center relative z-10 px-4">

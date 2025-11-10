@@ -23,11 +23,11 @@ export default function ProjectsSection() {
         }
         viewport={{ amount: 0.4, once: false }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-3xl font-bold text-center mb-8 "
+        className="text-xl font-bold text-center mb-8 "
       >
         <GradientText
           text="Proyectos"
-          className="uppercase text-4xl"
+          className="uppercase text-5xl"
           gradient="linear-gradient(90deg, #3b82f6 0%, #a855f7 20%, #ec4899 50%, #a855f7 80%, #3b82f6 100%)"
           neon={true}
         />

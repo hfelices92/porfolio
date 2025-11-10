@@ -55,7 +55,7 @@ export default function About() {
           <div className="md:w-7/12 text-lg md:ml-5 leading-relaxed">
             <CryptTextEffect
               glitchActive
-              decryptActive
+              
               tickCambioLetra={8}
               className="text-slate-200 text-glow-purple"
               text="Hello! I'm a passionate developer with a love for creating innovative solutions. With a strong background in web development, I enjoy building applications that are both functional and visually appealing. Hello! I'm a passionate developer with a love for creating innovative solutions. With a strong background in web development, I enjoy building applications that are both functional and visually appealing."
@@ -67,6 +67,7 @@ export default function About() {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad labore et
           pariatur temporibus voluptas architecto alias. Perspiciatis facilis.
         </p>
+        
       </div>
       {/* Fondo animado */}
       <BackgroundLetters />
