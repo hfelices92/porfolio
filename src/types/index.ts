@@ -9,5 +9,10 @@ export type Project = {
   title: string;
   description: string;
   images: string[];
-  url: string;
+  captions: string[];
+  skills: Skill[];
+  url?: string;
+  github: string;
+  backEnd?: string;
+  details?: string;
 };

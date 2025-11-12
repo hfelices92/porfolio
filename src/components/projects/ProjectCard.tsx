@@ -1,6 +1,7 @@
 import type { Project } from "../../types";
 import { motion, useAnimation } from "framer-motion";
 import ProjecImgSlider from "./ProjectImgSlider";
+import ProjectSkills from "./ProjectSkills";
 
 type ProjectCardProps = {
   project: Project;
@@ -62,18 +63,19 @@ export default function ProjectCard({
         }
         viewport={{ amount: 0.3, once: false }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="flex flex-col bg-[#24253D]/80 rounded-xl overflow-hidden min-h-80 p-3 border
+        className="flex flex-col bg-[#24253D]/80 rounded-xl overflow-hidden p-3 border
                  border-[rgba(168,85,247,0.3)] hover:border-[rgba(168,85,247,0.7)] shadow-md"
       >
         <div className="mb-4 md:mb-0">
-          <ProjecImgSlider images={project.images} />
+          <ProjecImgSlider images={project.images} size="small"/>
         </div>
 
         <div className="flex flex-col  p-4  h-full">
-          <h3 className="text-2xl text-slate-200 font-semibold mb-2">
+          <h3 className="text-2xl text-slate-200 mb-2 first-letter:text-purple-600 first-letter:font-bold first-letter:text-3xl">
             {project.title}
           </h3>
-          <p className="text-slate-200 mb-4 text-sm">{project.description}</p>
+          <ProjectSkills skills={project.skills} />
+         
           <div className="flex justify-end  h-full items-end">
             <p
               onClick={() => expandProject && expandProject(project.id)}

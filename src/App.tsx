@@ -18,9 +18,17 @@ export default function App() {
 
   const scrollToSection = {
     about: () => aboutRef.current?.scrollIntoView({ behavior: "smooth" }),
-    skills: () => skillsRef.current?.scrollIntoView({ behavior: "smooth" }),
-    projects: () => {
+    skills: () => {
       const yOffset = -100; // ajusta el desplazamiento según la altura de tu navbar
+      const element = skillsRef.current;
+      if (element) {
+        const y =
+          element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    },
+    projects: () => {
+      const yOffset = -40; // ajusta el desplazamiento según la altura de tu navbar
       const element = projectsRef.current;
       if (element) {
         const y =

@@ -1,17 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import { GradientText } from "./ui/shadcn-io/gradient-text";
 
+
 type NavbarProps = {
   scrollToSection: {
     about: () => void;
     projects: () => void;
     contact: () => void;
+    skills: () => void;
   };
 };
 
 export default function Navbar({ scrollToSection }: NavbarProps) {
   const navigate = useNavigate();
-
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <nav
       className="
@@ -33,13 +40,21 @@ export default function Navbar({ scrollToSection }: NavbarProps) {
 
       {/* Menú escritorio */}
       <ul className="hidden md:flex gap-6 text-xl">
-        <li
-          className="hover-underline cursor-pointer"
-          onClick={scrollToSection.about}
-        >
+        <li className="hover-underline cursor-pointer" onClick={scrollToTop}>
           <GradientText
             neon={true}
             text="Sobre Mi"
+            gradient="linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%)"
+          />
+        </li>
+        <span className="text-slate-500">|</span>
+        <li
+          className="hover-underline cursor-pointer"
+          onClick={scrollToSection.skills}
+        >
+          <GradientText
+            neon={true}
+            text="Habilidades"
             gradient="linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%)"
           />
         </li>
@@ -72,7 +87,7 @@ export default function Navbar({ scrollToSection }: NavbarProps) {
         >
           <GradientText
             neon={true}
-            text="Ir al espacio"
+            text="Ir al Espacio"
             gradient="linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%)"
           />
         </li>

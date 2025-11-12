@@ -26,7 +26,6 @@ export const skills: Skill[] = [
   { name: "Bitbucket", icon: "devicon-bitbucket-original colored", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bitbucket/bitbucket-original.svg" },
   { name: "Vite", icon: "devicon-vitejs-plain colored", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" },
   { name: "TanStack", icon: "devicon-react-original colored", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
-  { name: "Figma", icon: "devicon-figma-plain colored", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
   { name: "VS Code", icon: "devicon-vscode-plain colored", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
   { name: "PhpStorm", icon: "devicon-phpstorm-plain colored", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/phpstorm/phpstorm-original.svg" },
   { name: "Redux", icon: "devicon-redux-original colored", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg" },
@@ -36,3 +35,13 @@ export const skills: Skill[] = [
   { name: "Linux", icon: "devicon-linux-plain text-orange-300", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
   { name: "Bash", icon: "devicon-bash-plain text-slate-300", src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" },
 ];
+
+
+
+export const skillsMap = skills.reduce((acc, skill) => {
+  const key = skill.name
+    .toLowerCase()
+    .replace(/\s|\./g, ""); // ej: "Node.js" → "nodejs"
+  acc[key] = skill;
+  return acc;
+}, {} as Record<string, Skill>);

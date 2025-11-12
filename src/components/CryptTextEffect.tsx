@@ -5,12 +5,7 @@ type CryptTextEffectProps = {
   randCar?: string[];
   tickCambioLetra?: number;
   className?: string;
-
-  /** Efectos opcionales */
-  decryptActive?: boolean; // efecto de desencriptado inicial
-  glitchActive?: boolean;  // efecto de glitch continuo
-
-  /** Configuración del glitch */
+  glitchActive?: boolean;
   glitchMinDelayMs?: number;
   glitchMaxDelayMs?: number;
   glitchDurationMs?: number;
@@ -20,12 +15,11 @@ type CryptTextEffectProps = {
 export default function CryptTextEffect({
   text,
   randCar,
-  tickCambioLetra = 100,
+  tickCambioLetra = 50,
   className = "",
-  decryptActive = false,
   glitchActive = false,
   glitchMinDelayMs = 500,
-  glitchMaxDelayMs = 1000,
+  glitchMaxDelayMs = 1500,
   glitchDurationMs = 400,
   glitchTickMs = 50,
 }: CryptTextEffectProps) {
@@ -37,20 +31,15 @@ export default function CryptTextEffect({
     [randCar]
   );
 
-  const [newText, setNewText] = useState(
-    decryptActive
-      ? Array.from(text)
-          .map(() => caracteresRandom[Math.floor(Math.random() * caracteresRandom.length)])
-          .join("") // 👈 arranca encriptado
-      : text
-  );
+  const [displayChars, setDisplayChars] = useState<string[]>(Array.from(text));
+  const [glitchingIndex, setGlitchingIndex] = useState<number | null>(null);
+  const [revealedCount, setRevealedCount] = useState(0);
 
-  const min = 0;
-  const max = caracteresRandom.length - 1;
-const revealIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const baseCharsRef = useRef<string[]>(Array.from(text));
+  const revealIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
 
   const randomInt = (a: number, b: number) =>
     Math.floor(Math.random() * (b - a + 1)) + a;
@@ -58,28 +47,42 @@ const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   function clearAll() {
     if (revealIntervalRef.current) clearInterval(revealIntervalRef.current);
     if (glitchTimeoutRef.current) clearTimeout(glitchTimeoutRef.current);
-    if (glitchTickTimeoutRef.current) clearTimeout(glitchTickTimeoutRef.current);
+    if (glitchTickTimeoutRef.current)
+      clearTimeout(glitchTickTimeoutRef.current);
   }
 
-  // 💚 Efecto glitch sobre un carácter aleatorio
+  // 💚 Efecto glitch en un solo carácter aleatorio
   function glitchOnce() {
-    const chars = [...baseCharsRef.current];
-    if (!chars.length) return;
-    const i = randomInt(0, chars.length - 1);
-    const original = chars[i];
+    const validIndexes = displayChars
+      .map((c, i) => (c.trim() !== "" ? i : null))
+      .filter((i) => i !== null) as number[];
+    if (validIndexes.length === 0) return;
+
+    const i = validIndexes[randomInt(0, validIndexes.length - 1)];
+    const original = text[i];
     const cycles = Math.max(1, Math.floor(glitchDurationMs / glitchTickMs));
     let c = 0;
+    setGlitchingIndex(i);
 
     const tick = () => {
-      chars[i] = caracteresRandom[randomInt(min, max)];
-      setNewText(chars.join(""));
+      setDisplayChars((prev) => {
+        const updated = [...prev];
+        updated[i] = caracteresRandom[randomInt(0, caracteresRandom.length - 1)];
+        return updated;
+      });
+
       if (++c < cycles) {
         glitchTickTimeoutRef.current = setTimeout(tick, glitchTickMs);
       } else {
-        chars[i] = original;
-        setNewText(chars.join(""));
+        setDisplayChars((prev) => {
+          const updated = [...prev];
+          updated[i] = original;
+          return updated;
+        });
+        setGlitchingIndex(null);
       }
     };
+
     tick();
   }
 
@@ -93,33 +96,34 @@ const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     }, delay);
   }
 
-  // 🔓 Efecto de desencriptado progresivo
+  // 🔓 Efecto de desencriptado inicial
   useEffect(() => {
     clearAll();
-    baseCharsRef.current = Array.from(text);
-
-    if (!decryptActive) {
-      setNewText(text);
-      if (glitchActive) scheduleGlitch();
-      return () => clearAll();
-    }
-
-    let contCiclos = 0;
-    let tempChars = Array.from(newText); // empieza ya encriptado
+    
+    let revealed = 0;
 
     revealIntervalRef.current = setInterval(() => {
-      // cada paso desencripta un carácter adicional desde el principio
-      if (contCiclos < text.length) {
-        tempChars[contCiclos] = text[contCiclos];
-        for (let i = contCiclos + 1; i < text.length; i++) {
-          tempChars[i] = caracteresRandom[randomInt(min, max)];
+      setDisplayChars((prev) => {
+        const updated = [...prev];
+        for (let i = revealed; i < text.length; i++) {
+          if (text[i] === " ") {
+            updated[i] = " ";
+          } else if (i === revealed) {
+            updated[i] = text[i];
+          } else {
+            updated[i] =
+              text[i] === " "
+                ? " "
+                : caracteresRandom[randomInt(0, caracteresRandom.length - 1)];
+          }
         }
-        setNewText(tempChars.join(""));
-        contCiclos++;
-      } else {
+        return updated;
+      });
+      revealed++;
+      setRevealedCount(revealed);
+      if (revealed > text.length) {
         clearInterval(revealIntervalRef.current!);
-        setNewText(text);
-        baseCharsRef.current = Array.from(text);
+        setDisplayChars(Array.from(text));
         if (glitchActive) scheduleGlitch();
       }
     }, tickCambioLetra);
@@ -127,7 +131,6 @@ const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     return () => clearAll();
   }, [
     text,
-    decryptActive,
     glitchActive,
     tickCambioLetra,
     caracteresRandom,
@@ -137,5 +140,24 @@ const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     glitchTickMs,
   ]);
 
-  return <p className={className}>{newText}</p>;
+  return (
+    <p className={className}>
+      {displayChars.map((char, i) => {
+        const isEncrypted =
+          i >= revealedCount || (glitchingIndex !== null && glitchingIndex === i);
+        return (
+          <span
+            key={i}
+            className={
+              isEncrypted
+                ? "glitch-char text-transparent bg-clip-text animate-glowGradient"
+                : ""
+            }
+          >
+            {char}
+          </span>
+        );
+      })}
+    </p>
+  );
 }
