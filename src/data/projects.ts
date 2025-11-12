@@ -18,7 +18,7 @@ export const projects: Project[] = [
     skills: [
       skillsMap.react,
       skillsMap.typescript,
-      skillsMap.tailwindcss,
+      skillsMap.tailwind,
       skillsMap.tanstack,
       skillsMap.zod,
       skillsMap.zustand,
@@ -50,7 +50,7 @@ export const projects: Project[] = [
       skillsMap.nextjs,
       skillsMap.react,
       skillsMap.typescript,
-      skillsMap.tailwindcss,
+      skillsMap.tailwind,
       skillsMap.prisma,
       skillsMap.zustand,
       skillsMap.zod,
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     skills: [
       skillsMap.react,
       skillsMap.typescript,
-      skillsMap.tailwindcss,
+      skillsMap.tailwind,
       skillsMap.zustand,
       skillsMap.zod,
     ],
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     skills: [
       skillsMap.react,
       skillsMap.typescript,
-      skillsMap.tailwindcss,
+      skillsMap.tailwind,
       skillsMap.zustand,
       skillsMap.zod,
     ],

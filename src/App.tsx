@@ -4,10 +4,11 @@ import About from "./components/about/About";
 
 import Navbar from "./components/Navbar";
 import ProjectsSection from "./components/projects/ProjectSection";
-import SkillsCaroussel from "./components/skills/SkillsCarousel";
+
 
 import MainLayout from "./layouts/MainLayout";
 import Contact from "./components/contact/Contact";
+import SkillsSection from "./components/skills/SkillsSection";
 
 export default function App() {
   // 👇 Añade el tipo HTMLDivElement o HTMLElement
@@ -53,7 +54,7 @@ export default function App() {
       </section>
 
       <section ref={skillsRef}>
-        <SkillsCaroussel />
+        <SkillsSection />
       </section>
 
       <section ref={projectsRef}>

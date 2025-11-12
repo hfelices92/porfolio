@@ -2,6 +2,8 @@ export type Skill = {
   name: string;
   icon: string; // Clase de icono (por ejemplo, para FontAwesome)
   src: string;  // URL del icono
+  category: string; // Categoría opcional del skill
+
 };
 
 export type Project = {
