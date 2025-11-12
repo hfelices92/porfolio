@@ -10,6 +10,7 @@ type CryptTextEffectProps = {
   glitchMaxDelayMs?: number;
   glitchDurationMs?: number;
   glitchTickMs?: number;
+  initialDecrypt?: boolean; // 🔥 NUEVO
 };
 
 export default function CryptTextEffect({
@@ -22,6 +23,7 @@ export default function CryptTextEffect({
   glitchMaxDelayMs = 1500,
   glitchDurationMs = 400,
   glitchTickMs = 50,
+  initialDecrypt = false, // 🔥 NUEVO: default true
 }: CryptTextEffectProps) {
   const caracteresRandom = useMemo(
     () =>
@@ -37,9 +39,7 @@ export default function CryptTextEffect({
 
   const revealIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  );
+  const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const randomInt = (a: number, b: number) =>
     Math.floor(Math.random() * (b - a + 1)) + a;
@@ -51,7 +51,6 @@ export default function CryptTextEffect({
       clearTimeout(glitchTickTimeoutRef.current);
   }
 
-  // 💚 Efecto glitch en un solo carácter aleatorio
   function glitchOnce() {
     const validIndexes = displayChars
       .map((c, i) => (c.trim() !== "" ? i : null))
@@ -86,7 +85,6 @@ export default function CryptTextEffect({
     tick();
   }
 
-  // 🔄 Programa glitches periódicos
   function scheduleGlitch() {
     if (!glitchActive) return;
     const delay = randomInt(glitchMinDelayMs, glitchMaxDelayMs);
@@ -96,10 +94,22 @@ export default function CryptTextEffect({
     }, delay);
   }
 
-  // 🔓 Efecto de desencriptado inicial
+  // 🔓 Efecto de desencriptado inicial (OPCIONAL)
   useEffect(() => {
     clearAll();
-    
+
+    // ❗ Si NO queremos desencriptado inicial:
+    if (!initialDecrypt) {
+      // Mostrar directamente el texto final
+      setDisplayChars(Array.from(text));
+      setRevealedCount(text.length);
+
+      // Iniciar glitch si corresponde
+      if (glitchActive) scheduleGlitch();
+      return;
+    }
+
+    // 🔥 Modo desencriptado inicial normal
     let revealed = 0;
 
     revealIntervalRef.current = setInterval(() => {
@@ -119,8 +129,10 @@ export default function CryptTextEffect({
         }
         return updated;
       });
+
       revealed++;
       setRevealedCount(revealed);
+
       if (revealed > text.length) {
         clearInterval(revealIntervalRef.current!);
         setDisplayChars(Array.from(text));
@@ -132,6 +144,7 @@ export default function CryptTextEffect({
   }, [
     text,
     glitchActive,
+    initialDecrypt, // 🔥 reaccionamos al flag
     tickCambioLetra,
     caracteresRandom,
     glitchMinDelayMs,
@@ -145,6 +158,7 @@ export default function CryptTextEffect({
       {displayChars.map((char, i) => {
         const isEncrypted =
           i >= revealedCount || (glitchingIndex !== null && glitchingIndex === i);
+
         return (
           <span
             key={i}
