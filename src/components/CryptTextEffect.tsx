@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type CryptTextEffectProps = {
-  text: string;
+  paragraphs: string[];
   randCar?: string[];
   tickCambioLetra?: number;
   className?: string;
@@ -10,11 +10,11 @@ type CryptTextEffectProps = {
   glitchMaxDelayMs?: number;
   glitchDurationMs?: number;
   glitchTickMs?: number;
-  initialDecrypt?: boolean; // 🔥 NUEVO
+  initialDecrypt?: boolean;
 };
 
 export default function CryptTextEffect({
-  text,
+  paragraphs,
   randCar,
   tickCambioLetra = 50,
   className = "",
@@ -23,21 +23,32 @@ export default function CryptTextEffect({
   glitchMaxDelayMs = 1500,
   glitchDurationMs = 400,
   glitchTickMs = 50,
-  initialDecrypt = false, // 🔥 NUEVO: default true
+  initialDecrypt = true,
 }: CryptTextEffectProps) {
+
   const caracteresRandom = useMemo(
     () =>
-      randCar && randCar.length
+      randCar?.length
         ? randCar
         : ["$", "x", "*", "@", "#", "%", "&", "=", "+", "-"],
     [randCar]
   );
 
-  const [displayChars, setDisplayChars] = useState<string[]>(Array.from(text));
-  const [glitchingIndex, setGlitchingIndex] = useState<number | null>(null);
-  const [revealedCount, setRevealedCount] = useState(0);
+  // Estados por párrafo
+  const [displays, setDisplays] = useState<string[][]>(
+    paragraphs.map((p) => Array.from(p))
+  );
+  const [revealedCounts, setRevealedCounts] = useState<number[]>(
+    paragraphs.map(() => 0)
+  );
 
-  const revealIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // 🔥 GLITCH GLOBAL
+  const [glitchState, setGlitchState] = useState<{
+    pIndex: number | null;
+    cIndex: number | null;
+  }>({ pIndex: null, cIndex: null });
+
+  const revealIntervals = useRef<Record<number, ReturnType<typeof setInterval> | null>>({});
   const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const glitchTickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -45,133 +56,167 @@ export default function CryptTextEffect({
     Math.floor(Math.random() * (b - a + 1)) + a;
 
   function clearAll() {
-    if (revealIntervalRef.current) clearInterval(revealIntervalRef.current);
+    Object.values(revealIntervals.current).forEach((i) => i && clearInterval(i));
     if (glitchTimeoutRef.current) clearTimeout(glitchTimeoutRef.current);
-    if (glitchTickTimeoutRef.current)
-      clearTimeout(glitchTickTimeoutRef.current);
+    if (glitchTickTimeoutRef.current) clearTimeout(glitchTickTimeoutRef.current);
   }
 
+  // 🔥 UN SOLO GLITCH GLOBAL
   function glitchOnce() {
-    const validIndexes = displayChars
+    const validParagraphs = displays
+      .map((p, i) => (p.length > 0 ? i : null))
+      .filter((i) => i !== null) as number[];
+
+    if (validParagraphs.length === 0) return;
+
+    const pIndex = validParagraphs[randomInt(0, validParagraphs.length - 1)];
+    const row = displays[pIndex];
+
+    const validIndexes = row
       .map((c, i) => (c.trim() !== "" ? i : null))
       .filter((i) => i !== null) as number[];
+
     if (validIndexes.length === 0) return;
 
-    const i = validIndexes[randomInt(0, validIndexes.length - 1)];
-    const original = text[i];
+    const cIndex = validIndexes[randomInt(0, validIndexes.length - 1)];
+    const original = paragraphs[pIndex][cIndex];
+
     const cycles = Math.max(1, Math.floor(glitchDurationMs / glitchTickMs));
     let c = 0;
-    setGlitchingIndex(i);
+
+    setGlitchState({ pIndex, cIndex });
 
     const tick = () => {
-      setDisplayChars((prev) => {
+      setDisplays((prev) => {
         const updated = [...prev];
-        updated[i] = caracteresRandom[randomInt(0, caracteresRandom.length - 1)];
+        updated[pIndex] = [...updated[pIndex]];
+        updated[pIndex][cIndex] =
+          caracteresRandom[randomInt(0, caracteresRandom.length - 1)];
         return updated;
       });
 
       if (++c < cycles) {
         glitchTickTimeoutRef.current = setTimeout(tick, glitchTickMs);
       } else {
-        setDisplayChars((prev) => {
+        setDisplays((prev) => {
           const updated = [...prev];
-          updated[i] = original;
+          updated[pIndex] = [...updated[pIndex]];
+          updated[pIndex][cIndex] = original;
           return updated;
         });
-        setGlitchingIndex(null);
+
+        setGlitchState({ pIndex: null, cIndex: null });
       }
     };
 
     tick();
   }
 
+  // 🔁 Programar glitch global recurrente
   function scheduleGlitch() {
     if (!glitchActive) return;
+
     const delay = randomInt(glitchMinDelayMs, glitchMaxDelayMs);
+
     glitchTimeoutRef.current = setTimeout(() => {
       glitchOnce();
       scheduleGlitch();
     }, delay);
   }
 
-  // 🔓 Efecto de desencriptado inicial (OPCIONAL)
+  // ⬇️ Efecto de desencriptado inicial por párrafo
   useEffect(() => {
     clearAll();
 
-    // ❗ Si NO queremos desencriptado inicial:
-    if (!initialDecrypt) {
-      // Mostrar directamente el texto final
-      setDisplayChars(Array.from(text));
-      setRevealedCount(text.length);
+    paragraphs.forEach((p, pIndex) => {
+      if (!initialDecrypt) {
+        setDisplays((prev) => {
+          const updated = [...prev];
+          updated[pIndex] = Array.from(p);
+          return updated;
+        });
 
-      // Iniciar glitch si corresponde
-      if (glitchActive) scheduleGlitch();
-      return;
-    }
+        setRevealedCounts((prev) => {
+          const updated = [...prev];
+          updated[pIndex] = p.length;
+          return updated;
+        });
 
-    // 🔥 Modo desencriptado inicial normal
-    let revealed = 0;
-
-    revealIntervalRef.current = setInterval(() => {
-      setDisplayChars((prev) => {
-        const updated = [...prev];
-        for (let i = revealed; i < text.length; i++) {
-          if (text[i] === " ") {
-            updated[i] = " ";
-          } else if (i === revealed) {
-            updated[i] = text[i];
-          } else {
-            updated[i] =
-              text[i] === " "
-                ? " "
-                : caracteresRandom[randomInt(0, caracteresRandom.length - 1)];
-          }
-        }
-        return updated;
-      });
-
-      revealed++;
-      setRevealedCount(revealed);
-
-      if (revealed > text.length) {
-        clearInterval(revealIntervalRef.current!);
-        setDisplayChars(Array.from(text));
-        if (glitchActive) scheduleGlitch();
+        return;
       }
-    }, tickCambioLetra);
+
+      let revealed = 0;
+
+      revealIntervals.current[pIndex] = setInterval(() => {
+        setDisplays((prev) => {
+          const updated = [...prev];
+          const chars = [...updated[pIndex]];
+
+          for (let i = revealed; i < p.length; i++) {
+            if (p[i] === " ") {
+              chars[i] = " ";
+            } else if (i === revealed) {
+              chars[i] = p[i];
+            } else {
+              chars[i] =
+                caracteresRandom[randomInt(0, caracteresRandom.length - 1)];
+            }
+          }
+
+          updated[pIndex] = chars;
+          return updated;
+        });
+
+        revealed++;
+
+        setRevealedCounts((prev) => {
+          const updated = [...prev];
+          updated[pIndex] = revealed;
+          return updated;
+        });
+
+        if (revealed > p.length) {
+          clearInterval(revealIntervals.current[pIndex]!);
+
+          setDisplays((prev) => {
+            const updated = [...prev];
+            updated[pIndex] = Array.from(p);
+            return updated;
+          });
+        }
+      }, tickCambioLetra);
+    });
+
+    // Una vez terminado el decrypt, activar glitch global
+    if (glitchActive) scheduleGlitch();
 
     return () => clearAll();
-  }, [
-    text,
-    glitchActive,
-    initialDecrypt, // 🔥 reaccionamos al flag
-    tickCambioLetra,
-    caracteresRandom,
-    glitchMinDelayMs,
-    glitchMaxDelayMs,
-    glitchDurationMs,
-    glitchTickMs,
-  ]);
+  }, [paragraphs, glitchActive, initialDecrypt]);
 
   return (
-    <p className={className}>
-      {displayChars.map((char, i) => {
-        const isEncrypted =
-          i >= revealedCount || (glitchingIndex !== null && glitchingIndex === i);
+    <div className={className}>
+      {displays.map((chars, pIndex) => (
+        <p key={pIndex} className="mb-4">
+          {chars.map((char, i) => {
+            const isEncrypted =
+              i >= revealedCounts[pIndex] ||
+              (glitchState.pIndex === pIndex && glitchState.cIndex === i);
 
-        return (
-          <span
-            key={i}
-            className={
-              isEncrypted
-                ? "glitch-char text-transparent bg-clip-text animate-glowGradient"
-                : ""
-            }
-          >
-            {char}
-          </span>
-        );
-      })}
-    </p>
+            return (
+              <span
+                key={i}
+                className={
+                  isEncrypted
+                    ? "glitch-char text-transparent bg-clip-text animate-glowGradient"
+                    : ""
+                }
+              >
+                {char}
+              </span>
+            );
+          })}
+        </p>
+      ))}
+    </div>
   );
 }

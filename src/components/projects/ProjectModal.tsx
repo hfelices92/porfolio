@@ -34,7 +34,7 @@ export default function ProjectModal({
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 50, opacity: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="bg-[#24253D] text-white w-full max-w-[90vw] h-[95vh] overflow-y-auto rounded-xl shadow-2xl p-8 relative scrollbar-hide"
+        className="bg-[#24253D] text-white w-full max-w-[90vw] h-[97vh] overflow-y-auto rounded-xl shadow-2xl p-8 relative scrollbar-hide"
       >
         {/* Botón cerrar */}
         <button

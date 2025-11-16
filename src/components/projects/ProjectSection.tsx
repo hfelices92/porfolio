@@ -1,7 +1,7 @@
 import { GradientText } from "../ui/shadcn-io/gradient-text";
 
 import ProjectsDisplay from "./ProjectsDisplay";
-import { projects } from "@/data/projects";
+import { projects } from "../../data/projects";
 
 
 

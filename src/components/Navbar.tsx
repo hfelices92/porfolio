@@ -39,7 +39,7 @@ export default function Navbar({ scrollToSection }: NavbarProps) {
       </div>
 
       {/* Menú escritorio */}
-      <ul className="hidden md:flex gap-6 text-xl">
+      <ul className="hidden md:flex gap-4 text-lg ">
         <li className="hover-underline cursor-pointer" onClick={scrollToTop}>
           <GradientText
             neon={true}

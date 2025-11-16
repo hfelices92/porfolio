@@ -1,4 +1,4 @@
-import { skills } from "@/data/skills";
+import { skills } from "../../data/skills";
 import ScrollVelocity from "../ui/shadcn-io/scroll-velocity";
 
 export default function BackgroundLetters() {
@@ -17,7 +17,7 @@ export default function BackgroundLetters() {
       <ScrollVelocity
         texts={[firstHalf, secondHalf]}
         velocity={60}
-        className="lg:text-9xl font-bold text-glow-purple text-slate-300 opacity-20 select-none whitespace-nowrap"
+        className="lg:text-9xl font-bold text-glow-purple text-slate-300 opacity-10 select-none whitespace-nowrap"
       />
     </div>
   );

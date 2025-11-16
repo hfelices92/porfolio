@@ -7,3 +7,13 @@
   display: inline-block;
   animation: blink 1s step-end infinite;
 }
+
+/* Solo aplicar en pantallas medianas o grandes */
+@media (min-width: 768px) {
+  .profile-shape {
+    float: left;
+    shape-outside: circle(50%);
+    clip-path: circle(50%);
+    margin: 0 2rem 1rem 0;
+  }
+}

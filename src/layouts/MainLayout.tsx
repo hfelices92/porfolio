@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
-import { Particles } from "@/components/ui/shadcn-io/particles";
+import Footer from "../components/Footer";
+import { Particles } from "../components/ui/shadcn-io/particles";
 
 export default function MainLayout({
   children,

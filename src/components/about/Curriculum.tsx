@@ -1,4 +1,4 @@
-import { skills } from "@/data/skills";
+import { skills } from "../../data/skills";
 import { motion } from "framer-motion";
 
 import { FileDown, MapPin, Mail, Phone } from "lucide-react";
@@ -150,7 +150,7 @@ export default function Curriculum() {
               </ul>
             </div>
             {/* SororidApp */}
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <h3 className="font-semibold text-slate-100">
                 Full-Stack Developer — SororidApp <span className="text-xs">PP</span>
               </h3>
@@ -175,7 +175,7 @@ export default function Curriculum() {
                   relaciones entre entidades.
                 </li>
               </ul>
-            </div>
+            </div> */}
 
             <h2 className="text-md font-semibold text-purple-400 mb-3">
               Otras experiencias laborales

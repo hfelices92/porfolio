@@ -2,12 +2,14 @@ import { useState } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import "./projects.css";
 
+import type { Project } from "../../types";
+
 
 
 type ProjectSliderProps = {
-  images: string[];
-  captions?: string[];
+  images: Project["images"];
   size?: string;
+  captions?: boolean;
 };
 
 export default function ProjectImgSlider({ images, size, captions }: ProjectSliderProps) {
@@ -27,11 +29,11 @@ export default function ProjectImgSlider({ images, size, captions }: ProjectSlid
   return (
     <div className="relative">
       <div className="flex w-full h-full object-cover mx-auto overflow-hidden relative">
-        {images.map((src, index) => (
+        {images.map((image, index) => (
           <>
           <img
             key={index}
-            src={src}
+            src={image.src}
             alt="Project Slide"
             className={`object-contain shrink-0 grow-0 w-full transition-transform duration-500 ease-in-out ${
               size === "large" ? "h-80 md:h-140" : "h-70"
@@ -39,9 +41,9 @@ export default function ProjectImgSlider({ images, size, captions }: ProjectSlid
               style={{ translate: `${-100 * imageIndex}%` }}
               />
           
-             {captions && captions[index] && index === imageIndex && (
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white text-sm px-3 py-1 rounded-md">
-                {captions[index]}
+             {captions &&  (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-sm px-3 py-1 rounded-md">
+                {images[imageIndex].caption}
               </div>
              )}
               </>

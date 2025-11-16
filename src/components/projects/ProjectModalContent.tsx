@@ -1,4 +1,4 @@
-import type { Project } from "@/types";
+import type { Project } from "../../types";
 
 
 import ProjectImgSlider from "./ProjectImgSlider";
@@ -10,11 +10,11 @@ export default function ProjectModalContent({
   project,
 }: ProjectModalContentProps) {
   return (
-    <div key={project.id} className="md:px-3">
-      <h2 className="text-4xl font-bold mb-4">{project.title}</h2>
-      <p className="mb-6">{project.description}</p>
+    <div key={project.id} className="md:px-3 h-full">
+      <h2 className="text-5xl md:w-10/12 mx-auto font-bold mb-4 first-letter:text-purple-600">{project.title}</h2>
+      <p className="mb-6 md:w-10/12 mx-auto">{project.description}</p>
 
-      <ProjectImgSlider images={project.images} size="large" captions={project.captions} />
+      <ProjectImgSlider images={project.images} size="large" captions />
 
       <div className="flex items-center gap-4 mb-6 justify-end mt-8 mr-10">
         {project.github && (
@@ -60,6 +60,26 @@ export default function ProjectModalContent({
             className="inline-block bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-md font-medium text-white"
           >
             Ver demo
+          </a>
+        )}
+        {project.adminUrl && (
+          <a
+            href={project.adminUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-md font-medium text-white"
+          >
+            Vista Administrador
+          </a>
+        )}
+        {project.extraUrl && (
+          <a
+            href={project.extraUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-md font-medium text-white"
+          >
+            Vista Recogida
           </a>
         )}
       </div>

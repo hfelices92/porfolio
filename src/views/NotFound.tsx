@@ -1,11 +1,11 @@
-import ProjectNavBar from "@/components/projects/project-details/ProjectNavBar";
-import MainLayout from "@/layouts/MainLayout";
+
+import MainLayout from "../layouts/MainLayout";
 import {
   motion
 } from "framer-motion";
 import { Link } from "react-router-dom";
-import { GradientText } from "@/components/ui/shadcn-io/gradient-text";
-import FloatingAstronaut from "@/components/FloatingAstronaut";
+import { GradientText } from "../components/ui/shadcn-io/gradient-text";
+import FloatingAstronaut from "../components/FloatingAstronaut";
 
 
 
