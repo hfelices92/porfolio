@@ -25,9 +25,7 @@ export const projects: Project[] = [
       skillsMap.typescript,
       skillsMap.tailwind,
       skillsMap.tanstack,
-      skillsMap.zod,
       skillsMap.zustand,
-      skillsMap.vscode,
       skillsMap.nodejs,
       skillsMap.express,
       skillsMap.mongodb,
@@ -72,7 +70,6 @@ export const projects: Project[] = [
     skillsMap.prisma,
     skillsMap.postgresql,
     skillsMap.zustand,
-    skillsMap.zod,
     skillsMap.axios,
   ],
 
@@ -81,67 +78,37 @@ export const projects: Project[] = [
     extraUrl: "https://xiri-next.vercel.app/orders",
     github: "https://github.com/hfelices92/xiri-next",
   },
-  {
-    id: "3",
-    title: "Laravel Blog",
-    description:
-      "Aplicación full-stack para gestionar proyectos y tareas, con autenticación JWT y API REST en Node.js + Express. El frontend en React ofrece una experiencia fluida con React Query, React Hook Form y un diseño limpio en Tailwind CSS. Permite crear proyectos, asignar tareas por estado y añadir notas colaborativas en tiempo real.",
-    images: [
-      {
-        src: "/images/taskmanager/task_manager_miniature.png",
-        caption: "Tablero Kanban",
-      },
-      { src: "/images/taskmanager/task1.png", caption: "Creación de Tareas" },
-      { src: "/images/taskmanager/task2.png", caption: "Drag&Drop" },
-      { src: "/images/taskmanager/task3.png", caption: "Notas en Tiempo Real" },
-      {
-        src: "/images/taskmanager/task4.png",
-        caption: "Proyectos Colaborativos",
-      },
-    ],
-    skills: [
-      skillsMap.php,
-      skillsMap.laravel,
-      skillsMap.mysql,
-      skillsMap.phpstorm,
-    ],
+  // {
+  //   id: "3",
+  //   title: "Laravel Blog",
+  //   description:
+  //     "Aplicación full-stack para gestionar proyectos y tareas, con autenticación JWT y API REST en Node.js + Express. El frontend en React ofrece una experiencia fluida con React Query, React Hook Form y un diseño limpio en Tailwind CSS. Permite crear proyectos, asignar tareas por estado y añadir notas colaborativas en tiempo real.",
+  //   images: [
+  //     {
+  //       src: "/images/taskmanager/task_manager_miniature.png",
+  //       caption: "Tablero Kanban",
+  //     },
+  //     { src: "/images/taskmanager/task1.png", caption: "Creación de Tareas" },
+  //     { src: "/images/taskmanager/task2.png", caption: "Drag&Drop" },
+  //     { src: "/images/taskmanager/task3.png", caption: "Notas en Tiempo Real" },
+  //     {
+  //       src: "/images/taskmanager/task4.png",
+  //       caption: "Proyectos Colaborativos",
+  //     },
+  //   ],
+  //   skills: [
+  //     skillsMap.php,
+  //     skillsMap.laravel,
+  //     skillsMap.mysql,
+  //   ],
 
-    url: "https://tusitio.com/dental",
-    github: "https://github.com/hfelices92/task-manager-frontend",
-    backEnd: "https://github.com/hfelices92/task-manager-backend",
-  },
+  //   url: "https://tusitio.com/dental",
+  //   github: "https://github.com/hfelices92/task-manager-frontend",
+  //   backEnd: "https://github.com/hfelices92/task-manager-backend",
+  // },
+
   {
     id: "4",
-    title: "Portfolio ",
-    description:
-      "Aplicación full-stack para gestionar proyectos y tareas, con autenticación JWT y API REST en Node.js + Express. El frontend en React ofrece una experiencia fluida con React Query, React Hook Form y un diseño limpio en Tailwind CSS. Permite crear proyectos, asignar tareas por estado y añadir notas colaborativas en tiempo real.",
-    images: [
-      {
-        src: "/images/taskmanager/task_manager_miniature.png",
-        caption: "Tablero Kanban",
-      },
-      { src: "/images/taskmanager/task1.png", caption: "Creación de Tareas" },
-      { src: "/images/taskmanager/task2.png", caption: "Drag&Drop" },
-      { src: "/images/taskmanager/task3.png", caption: "Notas en Tiempo Real" },
-      {
-        src: "/images/taskmanager/task4.png",
-        caption: "Proyectos Colaborativos",
-      },
-    ],
-    skills: [
-      skillsMap.react,
-      skillsMap.typescript,
-      skillsMap.tailwind,
-      skillsMap.zustand,
-      skillsMap.zod,
-    ],
-
-    url: "https://tusitio.com/dental",
-    github: "https://github.com/hfelices92/task-manager-frontend",
-    backEnd: "https://github.com/hfelices92/task-manager-backend",
-  },
-  {
-    id: "5",
     title: "Cocktail",
     description:
       "Aplicación web para explorar recetas de cócteles conectada a una API externa. Permite realizar búsquedas dinámicas, filtrar por categorías, gestionar una lista de favoritos y generar recetas nuevas mediante IA. El frontend está desarrollado en React, con un diseño moderno y responsivo construido con Tailwind CSS.",
@@ -166,10 +133,41 @@ export const projects: Project[] = [
       skillsMap.typescript,
       skillsMap.tailwind,
       skillsMap.zustand,
-      skillsMap.zod,
+     
       skillsMap.axios,
     ],
 
     github: "https://github.com/hfelices92/drinks-AI-react",
   },
+  {
+    id: "5",
+    title: "Portfolio ",
+    description:
+      "Aplicación full-stack para gestionar proyectos y tareas, con autenticación JWT y API REST en Node.js + Express. El frontend en React ofrece una experiencia fluida con React Query, React Hook Form y un diseño limpio en Tailwind CSS. Permite crear proyectos, asignar tareas por estado y añadir notas colaborativas en tiempo real.",
+    images: [
+     
+      { src: "/images/portfolio/portfolio1.png", caption: "Sobre Mi" },
+      { src: "/images/portfolio/portfolio2.png", caption: "Habilidades y Herramientas" },
+      { src: "/images/portfolio/portfolio3.png", caption: "Proyectos" },
+      {
+        src: "/images/portfolio/portfolio4.png",
+        caption: "Formulario de contacto",
+      },
+      {
+        src: "/images/portfolio/portfolio5.png",
+        caption: "Vista 404",
+      },
+    ],
+    skills: [
+      skillsMap.react,
+      skillsMap.typescript,
+      skillsMap.tailwind,
+      
+    ],
+
+    
+    github: "https://github.com/hfelices92/porfolio",
+   
+  },
+  
 ];
