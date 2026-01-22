@@ -4,15 +4,17 @@ import "./projects.css";
 
 import type { Project } from "../../types";
 
-
-
 type ProjectSliderProps = {
   images: Project["images"];
   size?: string;
   captions?: boolean;
 };
 
-export default function ProjectImgSlider({ images, size, captions }: ProjectSliderProps) {
+export default function ProjectImgSlider({
+  images,
+  size,
+  captions,
+}: ProjectSliderProps) {
   const [imageIndex, setImageIndex] = useState(0);
 
   const nextImage = () => {
@@ -28,26 +30,31 @@ export default function ProjectImgSlider({ images, size, captions }: ProjectSlid
 
   return (
     <div className="relative">
-      <div className="flex w-full h-full object-cover mx-auto overflow-hidden relative">
+      <div className="flex w-full h-full object-cover overflow-hidden relative">
         {images.map((image, index) => (
           <>
-          <img
-            key={index}
-            src={image.src}
-            alt="Project Slide"
-            className={`object-contain shrink-0 grow-0 w-full transition-transform duration-500 ease-in-out ${
-              size === "large" ? "h-80 md:h-140" : "h-70"
+            <div
+              className={` shrink-0 grow-0 w-full transition-transform duration-500 ease-in-out ${
+                size === "large" ? "h-80 md:h-140 " : " h-60"
               } `}
-              style={{ translate: `${-100 * imageIndex}%` }}
+            >
+              <img
+                key={index}
+                src={image.src}
+                alt="Project Slide"
+                className={` w-full ${
+                  size === "large" ? " object-contain h-full" : " object-fill h-full"
+                } `}
+                style={{ translate: `${-100 * imageIndex}%` }}
               />
-          
-             {captions &&  (
+            </div>
+
+            {captions && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-sm px-3 py-1 rounded-md">
                 {images[imageIndex].caption}
               </div>
-             )}
-              </>
-          
+            )}
+          </>
         ))}
 
         {size === "large" && (
@@ -76,7 +83,7 @@ export default function ProjectImgSlider({ images, size, captions }: ProjectSlid
       </div>
 
       {size === "small" ? (
-        <div className="flex items-center justify-between gap-2 mt-2">
+        <div className="flex items-center justify-between gap-2 mt-2 mx-2">
           <button
             onClick={prevImage}
             className={`cursor-pointer slider-button ${

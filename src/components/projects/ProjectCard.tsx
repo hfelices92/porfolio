@@ -63,7 +63,7 @@ export default function ProjectCard({
         }
         viewport={{ amount: 0.3, once: false }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="flex flex-col bg-[#24253D]/80 rounded-xl overflow-hidden p-3 border
+        className="flex flex-col bg-[#24253D]/80 rounded-xl overflow-hidden  border
                  border-[rgba(168,85,247,0.3)] hover:border-[rgba(168,85,247,0.7)] shadow-md"
       >
         <div className="mb-4 md:mb-0">
