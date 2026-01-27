@@ -45,7 +45,7 @@ export default function Curriculum() {
           </a>
           <a
             href="/CV-Hector-Felices.pdf"
-            download="CV_Hector_Felices.pdf"
+            download="CV-Hector-Felices.pdf"
             className="flex items-center gap-1 text-sm hover:text-purple-400 transition"
           >
             <FileDown size={16} /> Descargar PDF
